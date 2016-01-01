@@ -1,0 +1,19 @@
+{
+	"name"             : "corco-server",
+	"args"             : ["--toto=heya coco", "-d", "1"],
+	"script"           : "bin/www",
+
+	"instances"        : 1, //or 0 => 'max'
+	"max_restarts"     : 10, // defaults to 15
+	"watch"            : ["routes","bin"],
+	"ignore_watch"      : ["[\\/\\\\]\\./", "node_modules"],
+	"merge_logs"       : true,
+
+	// Default environment variables that will be injected in any environment and at any start
+	"env": {
+		"AWESOME_SERVICE_API_TOKEN": "xxx"
+	},
+	"env_*" : {
+		"SPECIFIC_ENV" : true
+	}
+}

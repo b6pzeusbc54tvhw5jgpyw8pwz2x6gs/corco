@@ -1,0 +1,23 @@
+{
+  "name": "corco",
+  "version": "0.0.0",
+  "authors": [
+    "Alfred UC <b6pzeusbc54tvhw5jgpyw8pwz2x6gs@gmail.com>"
+  ],
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "marked": "~0.3.5",
+    "highlightjs": "~9.0.0"
+  }
+}

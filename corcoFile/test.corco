@@ -1,0 +1,32 @@
+corco_question
+In mobile device, when user tap screen, it makes 3 events touch start, touched, and click. 
+
+모바일 디
+바이스에서 사용자가 스크린을 터치할때 touch start, touchend, click 이벤트가 발생합니다.
+
+corco_answer
+
+In a mo
+bile device: 일반적으로 명사는 단수일 경우 관사와 함께 쓰거나 복수로 표현.
+
+* In a mobile device, the user actions will be handled with touch events such as touch start, touchend, and click.
+
+corco_question
+Current code's Both onTouchStart and onClick event handlers make a collision each other.
+
+현재 코드는 touchstart와 click 이벤트 핸들러가 동시에 달려있어서 이 두개가 충돌합니다.
+
+corco_answer
+* 충돌한다(충돌이 있다) / 현재코드는 x와 y가 동시에 있기때문에
+이렇게 나눠서 영작한다고 생각해보면 쉽게 접근할 수 있습니다.
+* 충돌  collision, 사전상으로 crash도 충돌이긴 한데 일반적으로 컴퓨터사시언스분야에서는 충돌을 collision으로 표현하는 것 같아요. 저도 이부분은 확실치 않네요….bb
+* -> Because current code has two event handlers — onTouchStart and onClick — simultaneously, there is collision between them.
+
+corco_question
+the onTouchStart have tree to be open, but onClick close it soon.
+
+유저가 sub object 를 보기 위해 트리를 탭하면 onTouchStart 에 의해 트리가 열리고 연이어 호출되는 onClick 에 의해 닫히게 됩니다.
+
+corco_answer
+* 유저가 ~하면  이부분에 대한 영어표현이 안되있네요.
+  * When the user touches tree to see sub object, the tree is opened by onTouchStart event. Then, it is closed by onClick event in a row.

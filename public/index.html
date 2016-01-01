@@ -1,0 +1,75 @@
+<!doctype html>
+<html ng-app="corco">
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+	<title>{{title}}</title>
+
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- <script src="https://code.angularjs.org/1.4.8/angular-mocks.js"></script> -->
+
+	<script type="text/javascript" src="bower_components/marked/marked.min.js"></script>
+	<script type="text/javascript" src="bower_components/highlightjs/highlight.pack.min.js"></script>
+	<script type="text/javascript" src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+	<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+	<script type="text/javascript" src="bower_components/angular-ui-ace/ui-ace.js"></script>
+	<script type="text/javascript" src="bower_components/ng-focus-on/ng-focus-on.min.js"></script>
+	<script type="text/javascript" src="bower_components/underscore/underscore-min.js"></script>
+	<script type="text/javascript" src="js/corco.js"></script>
+</head>
+
+<body>
+
+
+	<div ng-controller="CorcoController">
+		<h2>{{title}}</h2>
+		<ul class="sections">
+			<li ng-repeat="section in sectionList">
+
+				<div class="section leftSection" ng-click="edit($event,'left',$index)" ng-bind-html="section.leftHtml"></div>
+
+				<div class="section rightSection" ng-click="edit($event,'right',$index)" ng-bind-html="section.rightHtml"></div>
+			</li>
+		</ul>
+
+		<div class="editArea" ng-show="editMode">
+
+			<!--textarea class="asRaw" ng-trim="false" ng-model="editingRaw" ng-change="changeEditingRaw()" focus-on="editArea"></textarea>-->
+
+			<div class="asRaw" ng-trim="false" ng-model="editingRaw" ui-ace="{
+				onLoad: aceLoaded,
+				onChange: changeEditingRaw,
+				useWrapMode: true
+			}"></div>
+
+			<div ng-bind-html="editingHtml" class="asHtml"></div>
+
+			<div class="backdrop"></div>
+			<div class="btnBox">
+				<div ng-click="cancelEdit()">cancel</div>
+				<div ng-click="saveEdit()">save</div>
+			</div>
+		</div>
+
+		<div class="fullEditArea" ng-show="fullEditMode">
+			<div class="asRaw" ng-model="editingFullRaw" ui-ace="{
+				onLoad: aceLoaded,
+				useWrapMode: true
+			}"></div>
+			<div class="backdrop"></div>
+			<div class="btnBox">
+				<div ng-click="cancelFullEdit()">cancel</div>
+				<div ng-click="saveFullEdit()">save</div>
+			</div>
+		</div>
+
+		<button ng-click="getCorco()">getCorco()</button>
+		<button ng-click="editFullRaw()">edit</button>
+	</div>
+
+</body>
+</html>
