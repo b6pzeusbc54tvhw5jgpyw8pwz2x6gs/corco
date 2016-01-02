@@ -1,6 +1,6 @@
 {
   "name": "corco",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "apidoc": "node_modules/apidoc/bin/apidoc -i src -o public/apidoc",
