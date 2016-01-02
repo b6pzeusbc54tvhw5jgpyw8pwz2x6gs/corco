@@ -2,8 +2,8 @@
 corcoFiles
 build
 public/apidoc
-pm2start.my.json
-pm2start.stg.json
+pm2script.my.json
+pm2script.stg.json
 
 # Logs
 logs
