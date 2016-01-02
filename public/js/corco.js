@@ -93,6 +93,13 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 		$scope.sectionList = sectionList;
 		$scope.fullEditMode = false;
 		$scope.raw = raw;
+
+		var reqParams = { fileName: 'test.corco', raw: raw };
+		$http.post('corcoFile', reqParams ).then( function( res ) {
+
+			console.log( res );
+
+		}.bind(this));
 	};
 	$scope.editFullRaw = function() {
 		$scope.editingFullRaw = $scope.raw;
@@ -234,7 +241,7 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 	$scope.getCorco = function() {
 
 		console.log('click getCorco');
-		$http.get('corcoFile').then( function( res ) {
+		$http.get('corcoFile/test.corco').then( function( res ) {
 
 			console.log( res.data );
 			this.raw = res.data.raw;

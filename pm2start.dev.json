@@ -1,19 +1,22 @@
 {
 	"name"             : "corco-server",
-	"args"             : ["--toto=heya coco", "-d", "1"],
+	//"args"             : ["--toto=heya coco", "-d", "1"],
 	"cwd"             : "src/",
 	"script"           : "src/bin/www",
 
-	"instances"        : 1, //or 0 => 'max'
-	"max_restarts"     : 10, // defaults to 15
-	"watch"            : ["routes","bin"],
-	"ignore_watch"      : ["[\\/\\\\]\\./", "node_modules"],
+	//"instances"        : 1, //or 0 => 'max'
+	"min_uptime"     : "10s", // defaults to 15
+	"max_restarts"     : 3, // defaults to 15
+	"watch"            : ["./"],
+	"ignore_watch"     : ["[\\/\\\\]\\./", "node_modules"],
 	"merge_logs"       : true,
 
 	// Default environment variables that will be injected in any environment and at any start
 	"env": {
-		"VIEW_PATH": "./views",
-		"PUBLIC_PATH": "./public",
+		"START_SCRIPT_PATH": process.cwd(),
+		"VIEWS_PATH": "/Users/ssohjiro/projects/corco/views",
+		"CORCO_SVN_PATH": "/Users/ssohjiro/projects/corco/corcoFiles",
+		"PUBLIC_PATH": "/Users/ssohjiro/projects/corco/public",
 		"DEVELOPMENT": true
 	},
 	"env_*" : {

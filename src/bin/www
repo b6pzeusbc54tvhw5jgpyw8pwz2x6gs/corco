@@ -4,10 +4,6 @@
  * Module dependencies.
  */
 
-console.log( 'DEVELOPMENT', process.env.DEVELOPMENT );
-console.log( 'PUBLIC_PATH', process.env.PUBLIC_PATH );
-console.log( '__dirname', __dirname );
-console.log( 'cwd()', process.cwd() );
 if( process.env.DEVELOPMENT ) {
 	require("babel-register");
 }
