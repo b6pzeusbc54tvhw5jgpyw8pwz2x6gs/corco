@@ -1,6 +1,9 @@
 # assets
 corcoFiles
+build
 public/apidoc
+pm2start.my.json
+pm2start.stg.json
 
 # Logs
 logs

@@ -33,7 +33,7 @@ gulp.task('_build', () => {
 
 	let mergeList = [
 
-		gulp.src('src/controller/*.js')
+		gulp.src('src/controller/**/*.js')
 		.pipe(babel({ presets: ['es2015'] }))
 		.pipe( gulp.dest('build/controller') ),
 
