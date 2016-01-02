@@ -94,8 +94,7 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 		$scope.fullEditMode = false;
 		$scope.raw = raw;
 
-		var reqParams = { fileName: 'test.corco', raw: raw };
-		$http.post('corcoFile', reqParams ).then( function( res ) {
+		$http.post('corcoFile/test.corco', { raw: raw }).then( function( res ) {
 
 			console.log( res );
 
