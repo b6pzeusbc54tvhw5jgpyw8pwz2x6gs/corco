@@ -44,11 +44,11 @@ gulp.task('_build', () => {
 		gulp.src('src/bin/*')
 		.pipe( gulp.dest('build/bin') ),
 
-		gulp.src('src/views/*')
-		.pipe( gulp.dest('build/views') ),
+		//gulp.src('src/views/*')
+		//.pipe( gulp.dest('build/views') ),
 
-		gulp.src('src/public/*')
-		.pipe( gulp.dest('build/public') )
+		//gulp.src('src/public/*')
+		//.pipe( gulp.dest('build/public') )
 	];
 
 	_.each( pjson.dependencies, function( version, moduleName ) {
