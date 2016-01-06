@@ -1,5 +1,51 @@
-/* global angular,_,marked,hljs */
+/* global angular,_,marked,hljs,ace */
 var corco = angular.module('corco', ['focusOn','ui.ace'] );
+
+
+ace.define("MyHighlightRules", [], function(require, exports, module) {
+
+	"use strict";
+
+	console.log('in MyHighlightRules');
+	var oop = require("ace/lib/oop");
+	var TextHighlightRules = require("ace/mode/text_highlight_rules").TextHighlightRules;
+
+	var MarkdownHighlightRules = ace.require("ace/mode/markdown_highlight_rules").MarkdownHighlightRules;
+
+	var MyHighlightRules = function() {
+
+	   this.setKeywords = function(kwMap) {     
+		   this.keywordRule.onMatch = this.createKeywordMapper(kwMap, "identifier");
+	   };
+
+	   this.keywordRule = {
+		   regex : "\\w+",
+		   onMatch : function() {return "text";}
+	   };
+
+	   //session.bgTokenizer.setTokenizer( session.$mode.getTokenizer() );
+		 
+	   this.$rules = new MarkdownHighlightRules().getRules();
+		   
+	   this.$rules.start.push( 
+			{
+				token: "string",
+				start: '"', 
+				end: '"',
+				next: [{ token : "constant.language.escape.lsl", regex : /\\[tn"\\]/}]
+			},
+			this.keywordRule
+	   );
+	   //this.addRules( newRules, 'new-' );
+	   this.normalizeRules();
+	};
+
+	oop.inherits(MyHighlightRules, TextHighlightRules);
+
+	exports.MyHighlightRules = MyHighlightRules;
+
+});
+
 
 marked.setOptions({
 	smartypants: true,
@@ -94,8 +140,8 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 		$scope.fullEditMode = false;
 		$scope.raw = raw;
 
-		var reqParams = { fileName: 'test.corco', raw: raw };
-		$http.post('corcoFile', reqParams ).then( function( res ) {
+		var reqParams = { raw: raw };
+		$http.post('corcoFile/test.corco', reqParams ).then( function( res ) {
 
 			console.log( res );
 
@@ -104,14 +150,70 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 	$scope.editFullRaw = function() {
 		$scope.editingFullRaw = $scope.raw;
 		$scope.fullEditMode = true;
+
+		var session = $scope.fullEditor.session;
+
+		session.off( "change", init );
+		var Range = ace.require('ace/range').Range;
+		function init( e ) {
+
+			session.off( "change", init );
+			console.log( session.getLine( 9 ));
+			var doc = session.getDocument();
+			_.each( doc.getAllLines(), function( line, i ) {
+
+				//setTimeout( function() {
+				
+					if( /^corco_answer/.test( line )) {
+						session.addMarker(new Range(i, 0, i+1, 0), "foo", "line");
+					} else if( /^corco_question/.test( line )) {
+						session.addMarker(new Range(i, 0, i+1, 0), "bar", "line");
+					}
+
+				//}, 100);
+			});
+			
+		}
+		session.on("change", init );
 	};
+
 	$scope.aceLoaded = function( _editor ) {
+
+		$scope.fullEditor = _editor;
 
 		//_editor.setWrapBehavioursEnabled( false );
 		_editor.setOption("useWrapMode", true);
 		_editor.session.setOption("indentedSoftWrap", false);
-	};
 
+		var session = _editor.session;
+
+		var Range = ace.require('ace/range').Range;
+		var MarkdownMode = ace.require("ace/mode/markdown").Mode;
+		var myMode = new MarkdownMode();
+		
+		myMode.HighlightRules = ace.require("MyHighlightRules").MyHighlightRules;
+
+		session.setMode( myMode );
+		myMode.$highlightRules.setKeywords({ "keyword": "corco_answer|corco_question" });
+		session.bgTokenizer.start(0);
+
+		session.on("change", function( e ) {
+			
+			console.log(e);
+			// 그 ㅇ라인안에서만 놀떄는 그 ㅇ라인만 검사하면되고
+			// 라인이 달라지는 경우에 걍 귀찮으니 최소 반복 리밋 주고 한번씩 전수검사하자
+
+			for( var row = e.start.row,i=0; row<e.end.row; row++,i++ ) {
+
+				var line = e.lines[i];
+				if( /^corco_answer/.test( line )) {
+					session.addMarker(new Range(row, 0, row+1, 0), "foo", "line");
+				} else if( /^corco_question/.test( line )) {
+					session.addMarker(new Range(row, 0, row+1, 0), "bar", "line");
+				}
+			}
+		});
+	};
 
 	$scope.changeEditingRaw = function() {
 		$scope.editingHtml = $sce.trustAsHtml( marked( $scope.editingRaw ) );
@@ -171,7 +273,7 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 
 		var save = function() {
 			console.log( leftText );
-			sectionList.push({ leftText, rightText });
+			sectionList.push({ leftText: leftText, rightText: rightText });
 			leftText = '', rightText = '';
 			return;
 		};
@@ -256,7 +358,7 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 	$scope.saveCorco = function() {
 
 		var reqParams = { raw: this.raw };
-		$http.post('corcoFile', reqParams ).then( function( res ) {
+		$http.post('corcoFile/test.corco', reqParams ).then( function( res ) {
 
 			console.log( res.data );
 

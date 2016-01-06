@@ -91,6 +91,7 @@ router.get('/:fileName', (req, res, next) => {
  */
 router.post('/:fileName', (req, res, next) => {
 
+	console.log('wef');
 	fileManager.saveFile( req.params.fileName, req.body.raw ).then( () => {
 		res.send({ errorCode: 'NO_ERROR' });
 	});
