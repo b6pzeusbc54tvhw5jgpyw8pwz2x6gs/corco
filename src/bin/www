@@ -4,6 +4,9 @@
  * Module dependencies.
  */
 
+process.env.DEVELOPMENT = JSON.parse( process.env.DEVELOPMENT );
+process.env.PRODUCTION = JSON.parse( process.env.PRODUCTION );
+
 if( process.env.DEVELOPMENT ) {
 	require("babel-register");
 }

@@ -13,7 +13,7 @@
 
 	// Default environment variables that will be injected in any environment and at any start
 	"env": {
-		"START_SCRIPT_PATH": process.cwd(),
+		"PORT": 3015,
 		"VIEWS_PATH": "/Users/ssohjiro/projects/corco/views",
 		"CORCO_SVN_PATH": "/Users/ssohjiro/projects/corco/corcoFiles",
 		"PUBLIC_PATH": "/Users/ssohjiro/projects/corco/public",
