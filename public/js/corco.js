@@ -1,7 +1,6 @@
 /* global angular,_,marked,hljs,ace */
 var corco = angular.module('corco', ['focusOn','ui.ace'] );
 
-
 ace.define("MyHighlightRules", [], function(require, exports, module) {
 
 	"use strict";
@@ -147,34 +146,29 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 
 		}.bind(this));
 	};
+
 	$scope.editFullRaw = function() {
 		$scope.editingFullRaw = $scope.raw;
 		$scope.fullEditMode = true;
 
+		/*
+		// todo: addMarker
 		var session = $scope.fullEditor.session;
-
-		session.off( "change", init );
 		var Range = ace.require('ace/range').Range;
 		function init( e ) {
 
 			session.off( "change", init );
-			console.log( session.getLine( 9 ));
 			var doc = session.getDocument();
 			_.each( doc.getAllLines(), function( line, i ) {
-
-				//setTimeout( function() {
-				
-					if( /^corco_answer/.test( line )) {
-						session.addMarker(new Range(i, 0, i+1, 0), "foo", "line");
-					} else if( /^corco_question/.test( line )) {
-						session.addMarker(new Range(i, 0, i+1, 0), "bar", "line");
-					}
-
-				//}, 100);
+				if( /^corco_answer/.test( line )) {
+					session.addMarker(new Range(i, 0, i+1, 0), "foo", "line");
+				} else if( /^corco_question/.test( line )) {
+					session.addMarker(new Range(i, 0, i+1, 0), "bar", "line");
+				}
 			});
-			
 		}
 		session.on("change", init );
+		*/
 	};
 
 	$scope.aceLoaded = function( _editor ) {
@@ -197,22 +191,39 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 		myMode.$highlightRules.setKeywords({ "keyword": "corco_answer|corco_question" });
 		session.bgTokenizer.start(0);
 
+		/*
+		// add marker
 		session.on("change", function( e ) {
 			
 			console.log(e);
-			// 그 ㅇ라인안에서만 놀떄는 그 ㅇ라인만 검사하면되고
+			// 그 라인안에서만 놀떄는 그 ㅇ라인만 검사하면되고
 			// 라인이 달라지는 경우에 걍 귀찮으니 최소 반복 리밋 주고 한번씩 전수검사하자
 
-			for( var row = e.start.row,i=0; row<e.end.row; row++,i++ ) {
+			var line, row;
+			if( e.start.row === e.end.row ) {
 
-				var line = e.lines[i];
+				row = e.start.row;
+				line = e.lines[0];
 				if( /^corco_answer/.test( line )) {
 					session.addMarker(new Range(row, 0, row+1, 0), "foo", "line");
 				} else if( /^corco_question/.test( line )) {
 					session.addMarker(new Range(row, 0, row+1, 0), "bar", "line");
 				}
+
+			} else {
+
+				for( row = e.start.row,i=0; row<e.end.row; row++,i++ ) {
+
+					line = e.lines[i];
+					if( /^corco_answer/.test( line )) {
+						session.addMarker(new Range(row, 0, row+1, 0), "foo", "line");
+					} else if( /^corco_question/.test( line )) {
+						session.addMarker(new Range(row, 0, row+1, 0), "bar", "line");
+					}
+				}
 			}
 		});
+		*/
 	};
 
 	$scope.changeEditingRaw = function() {

@@ -42,7 +42,6 @@ router.get('/', (req, res, next) => {
 
 	logger.debug('get /corcoFile');
 	fileManager.loadFileList( CORCO_SVN_PATH ).then( ( fileList ) => {
-
 		res.send({ fileList: fileList });
 	});
 });

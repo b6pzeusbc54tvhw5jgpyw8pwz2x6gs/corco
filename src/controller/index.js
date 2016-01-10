@@ -24,16 +24,22 @@ logger.debug( '__dirname', __dirname );
 logger.debug( 'cwd()', process.cwd() );
 logger.debug( 'a StartScript:' + process.env.START_SCRIPT_PATH );
 
+router.get('/', (req, res, next) => {
+	logger.debug('hi');
+	res.sendFile( path.join( process.env.PUBLIC_PATH, 'index.html' ));
+});
+
 router.get('/css/style.css', (req, res, next) => {
 
 	logger.debug('get /css/style.css');
-	logger.debug('get hihihi');
 
 	var sassPath = path.join( process.env.PUBLIC_PATH, 'css/style.scss' );
 
 	sass.render({ file: sassPath }, (err, result) => {
-		logger.debug( err );
-		logger.debug( result.css );
+		if (err) {
+			logger.error( err );
+			res.send( err );
+		}
 		res.set('Content-Type', 'text/css');
 		res.send( result.css );
 	});

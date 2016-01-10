@@ -2,6 +2,7 @@
 	"name"             : "corco-server",
 	//"args"             : ["--toto=heya coco", "-d", "1"],
 	"cwd"             : "src/",
+	"args"             : ["--color"],
 	"script"           : "src/bin/www",
 
 	//"instances"        : 1, //or 0 => 'max'
@@ -14,10 +15,11 @@
 	// Default environment variables that will be injected in any environment and at any start
 	"env": {
 		"PORT": 3015,
+		"DEVELOPMENT": true,
+		"PRODUCTION": false,
 		"VIEWS_PATH": "/Users/ssohjiro/projects/corco/views",
 		"CORCO_SVN_PATH": "/Users/ssohjiro/projects/corco/corcoFiles",
-		"PUBLIC_PATH": "/Users/ssohjiro/projects/corco/public",
-		"DEVELOPMENT": true
+		"PUBLIC_PATH": "/Users/ssohjiro/projects/corco/public"
 	},
 	"env_*" : {
 		"SPECIFIC_ENV" : true
