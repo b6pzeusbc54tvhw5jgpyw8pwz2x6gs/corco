@@ -6,14 +6,6 @@ a {
   color: #00B7FF;
 }
 
-.leftSection {
-	width: 40%;
-}
-
-.rightSection {
-	width: 60%;
-}
-
 .foo{
 	position:absolute;
 	background:rgba(100,200,100,0.5);
@@ -343,6 +335,7 @@ ul.sections > li > div {
 
   ul.sections > li > div.section {
 	  white-space: normal;
+	  width: 100%;
 
 	  &:hover {
 		  background-color: #79FFAA;
