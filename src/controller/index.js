@@ -24,8 +24,9 @@ logger.debug( '__dirname', __dirname );
 logger.debug( 'cwd()', process.cwd() );
 logger.debug( 'a StartScript:' + process.env.START_SCRIPT_PATH );
 
+var vistorCount = 0;
 router.get('/', (req, res, next) => {
-	logger.debug('hi');
+	logger.debug('vistorCount: ', vistorCount++ );
 	res.sendFile( path.join( process.env.PUBLIC_PATH, 'index.html' ));
 });
 
