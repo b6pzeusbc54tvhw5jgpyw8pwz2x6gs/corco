@@ -4,7 +4,7 @@ const pm2 = require('pm2');
 const ERROR_EXIT = 1;
 //const SUCCESS_EXIT = 0;
 
-const CDN_DIR = path.join('/Users','ssohjiro','projects','parallels-comment');
+const CDN_HOME_DIR = __dirname;
 const DEVELOPMENT = true;
 
 var pm2script = {
@@ -26,9 +26,9 @@ var pm2script = {
 		"PORT": 3015,
 		"DEVELOPMENT": true,
 		"PRODUCTION": false,
-		"VIEWS_PATH": path.join( CDN_DIR, "views" ),
-		"CORCO_SVN_PATH": path.join( CDN_DIR, "files" ),
-		"PUBLIC_PATH": path.join( CDN_DIR, 'public' )
+		"VIEWS_PATH": path.join( CDN_HOME_DIR, "views" ),
+		"CORCO_SVN_PATH": path.join( CDN_HOME_DIR, "files" ),
+		"PUBLIC_PATH": path.join( CDN_HOME_DIR, 'public' )
 	},
 	"env_*" : {
 		"SPECIFIC_ENV" : true
