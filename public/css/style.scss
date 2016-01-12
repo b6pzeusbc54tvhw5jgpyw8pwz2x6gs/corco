@@ -331,11 +331,11 @@ ul.sections > li > div {
   ul.sections > li {
 
 	  float: left;
+	  width: 100%;
   }
 
   ul.sections > li > div.section {
 	  white-space: normal;
-	  width: 100%;
 
 	  &:hover {
 		  background-color: #79FFAA;
