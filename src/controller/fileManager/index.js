@@ -90,6 +90,7 @@ const fileManager = {
 
 	loadFileList: () => {
 
+		logger.debug( rootPath );
 		return nodefn.call( fs.readdir, rootPath ).then( ( fileList ) => {
 
 			return _.filter( fileList, ( fileName ) => {

@@ -1,6 +1,7 @@
 {
 	"name"             : "corco-server",
 	//"args"             : ["--toto=heya coco", "-d", "1"],
+
 	"cwd"             : "src/",
 	"args"             : ["--color"],
 	"script"           : "src/bin/www",

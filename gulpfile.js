@@ -18,6 +18,7 @@ const pjson = require('./package.json');
 const syncExec = require('sync-exec');
 const ynPrompt = require('yn-prompt');
 const argv = require('yargs').argv;
+const watch = require('gulp-watch');
 
 const logger = require('tracer').colorConsole({
 	format: "{{file}}:{{line}}) {{message}}"
@@ -302,6 +303,25 @@ gulp.task('fetchPublicFromClient', () => {
 
 	//fetchPublicFromClient();
 });
+
+gulp.task('apidoc', () => {
+
+	const cmd = 'node_modules/apidoc/bin/apidoc -i src -o public/apidoc';
+	console.log( cmd );
+	syncExec( cmd );
+
+	watch('*', function () {
+
+		console.log( cmd );
+		syncExec( cmd );
+	});
+	watch('src/**/*', function () {
+
+		console.log( cmd );
+		syncExec( cmd );
+	});
+});
+
 
 gulp.task('build', gulpsync.sync(['clean','_build']));
 gulp.task('release', gulpsync.sync(['clean','_build','_release']));

@@ -15,37 +15,35 @@
 var express = require('express');
 var router = express.Router();
 var logger = require('tracer').colorConsole();
-var CORCO_SVN_PATH = process.env.CORCO_SVN_PATH;
+var DOC_DIR_PATH = process.env.DOC_DIR_PATH;
 var fileManager = require('./fileManager/index');
-fileManager.initRootPath( CORCO_SVN_PATH );
+fileManager.initRootPath( DOC_DIR_PATH );
 
 /**
- * @api {get} /corcoFile GET /corcoFile
- * @apiGroup CorcoFile
- * @apiName GET /corcoFile
- * @apiDescription READ the all corcoFile list
+ * @api {post} /getDocList getDocList
+ * @apiGroup Doc
+ * @apiName getDocList
+ * @apiDescription READ the all doc list
  * @apiVersion 0.1.0
  * @apiUse CommonResult
  *
  * @apiUse CommonErrorCode
  * @apiError (errorCode) { string } NO_ROOT_DIRECTORY the root directory in the server side was not found
  *
- * @apiSuccess { array } fileList The list of corcoFiles
+ * @apiSuccess { array } doc fileName list
  * @apiSuccessExample Example data on success:
  * {
  * 	fileList: ["test1.corco","test2.corco"]
  * }
  *
- * @apiSampleRequest /corcoFile
+ * @apiSampleRequest /getDocList
  */
-router.get('/', (req, res, next) => {
+router.post('/getDocList', (req, res, next) => {
 
-	logger.debug('get /corcoFile');
-	fileManager.loadFileList( CORCO_SVN_PATH ).then( ( fileList ) => {
-		res.send({ fileList: fileList });
+	fileManager.loadFileList().then( ( fileList ) => {
+		res.send( fileList );
 	});
 });
-
 
 /**
  * @api {get} /corcoFile/:fileName GET /corcoFile/:fileName
