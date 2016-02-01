@@ -140,7 +140,7 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 		$scope.raw = raw;
 
 		var reqParams = { raw: raw };
-		$http.post('corcoFile/test.corco', reqParams ).then( function( res ) {
+		$http.post('doc/test.corco', reqParams ).then( function( res ) {
 
 			console.log( res );
 
@@ -354,7 +354,7 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 	$scope.getCorco = function() {
 
 		console.log('click getCorco');
-		$http.get('corcoFile/test.corco').then( function( res ) {
+		$http.get('doc/test.corco').then( function( res ) {
 
 			console.log( res.data );
 			this.raw = res.data.raw;
@@ -369,7 +369,7 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 	$scope.saveCorco = function() {
 
 		var reqParams = { raw: this.raw };
-		$http.post('corcoFile/test.corco', reqParams ).then( function( res ) {
+		$http.post('doc/test.corco', reqParams ).then( function( res ) {
 
 			console.log( res.data );
 
