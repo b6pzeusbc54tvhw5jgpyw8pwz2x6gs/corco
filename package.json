@@ -1,6 +1,6 @@
 {
-  "name": "corco",
-  "version": "0.1.0",
+  "name": "parallels-comments",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "apidoc": "node_modules/apidoc-support-socketio/bin/apidoc-support-socketio -i src -o public/apidoc",
