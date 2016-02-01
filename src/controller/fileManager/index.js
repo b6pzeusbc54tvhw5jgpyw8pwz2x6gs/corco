@@ -13,13 +13,32 @@ log4js_extend(log4js, {
 	format: "at @name (@file:@line:@column)"
 });
 var logger = log4js.getLogger();
+
 const svnOptions = {
 	username: 'corco',
 	password: 'corco',
 	cwd: process.env.CORCO_SVN_PATH
 };
 
+let rootPath = '';
+let doUseSvn = false;
+
 const svn = {
+	info: function( targetPath ) {
+
+		var deferred = when.defer();
+		svnUltimate.commands.info( targetPath, ( err, info ) => {
+
+			if( err ) {
+				deferred.reject( err );
+			}
+
+			deferred.resolve( info );
+		});
+
+		return deferred.promise;
+	},
+
 	add: function( filePath, options ) {
 		var deferred = when.defer();
 		options = _.extend({}, svnOptions, options );
@@ -58,8 +77,6 @@ const svn = {
 	}
 };
 
-let rootPath = '';
-
 function realPath( relativePath ) {
 	return path.join( rootPath, relativePath );
 }
@@ -71,42 +88,70 @@ const fileManager = {
 		logger.debug('createFile');
 		var filePath = realPath( fileName );
 
-		return svn.update().then( () => {
+		if( doUseSvn ) {
+
+			return svn.update().then( () => {
+
+				var alreadyExist = pathExists.sync( filePath );
+				if( alreadyExist ) {
+					logger.error( { errorCode: 'ALREADY_EXIST' } );
+					throw { errorCode: 'ALREADY_EXIST' };
+				}
+
+				return nodefn.call( fs.writeFile, filePath, raw );
+
+			}).then( function() {
+
+				return svn.add( filePath );
+
+			}).then( function() {
+				return svn.commit( filePath );
+			});
+
+		} else {
 
 			var alreadyExist = pathExists.sync( filePath );
 			if( alreadyExist ) {
+				var deferred = when.defer();
 				logger.error( { errorCode: 'ALREADY_EXIST' } );
-				throw { errorCode: 'ALREADY_EXIST' };
+				deferred.reject({ errorCode: 'ALREADY_EXIST' });
+				return deferred.promise;
 			}
-
 			return nodefn.call( fs.writeFile, filePath, raw );
-
-		}).then( function() {
-
-			return svn.add( filePath );
-
-		}).then( function() {
-			return svn.commit( filePath );
-		});
+		}
 	},
 
 	updateFile: ( fileName, raw ) => {
 
 		var filePath = realPath( fileName );
 
-		return svn.update().then( () => {
+		if( doUseSvn ) {
+
+			return svn.update().then( () => {
+
+				var alreadyExist = pathExists.sync( filePath );
+				if( ! alreadyExist ) {
+					logger.error( { errorCode: 'NO_EXIST_FILE' } );
+					throw { errorCode: 'NO_EXIST_FILE' };
+				}
+
+				return nodefn.call( fs.writeFile, filePath, raw );
+
+			}).then( function() {
+				return svn.commit( filePath );
+			});
+
+		} else {
 
 			var alreadyExist = pathExists.sync( filePath );
 			if( ! alreadyExist ) {
+				var deferred = when.defer();
 				logger.error( { errorCode: 'NO_EXIST_FILE' } );
-				throw { errorCode: 'NO_EXIST_FILE' };
+				deferred.reject({ errorCode: 'NO_EXIST_FILE' });
+				return deferred.promise;
 			}
-
 			return nodefn.call( fs.writeFile, filePath, raw );
-
-		}).then( function() {
-			return svn.commit( filePath );
-		});
+		}
 	},
 
 	loadFile: ( fileName ) => {
@@ -127,7 +172,19 @@ const fileManager = {
 	initRootPath: ( root ) => {
 		console.log('initRootPath');
 		rootPath = root;
+		doUseSvn;
+		svn.info( rootPath ).then( function( info ) {
+
+			logger.info( info );
+			doUseSvn = true;
+
+		}).catch( err => {
+
+			logger.error( err );
+			doUseSvn = false;
+		});
 	}
 };
+
 
 module.exports = fileManager;

@@ -12,6 +12,7 @@
  * @apiError (errorCode) { string } NO_ERROR success
  */
 
+var _ = require('underscore');
 var express = require('express');
 var router = express.Router();
 var log4js = require('log4js');
@@ -26,7 +27,15 @@ var DOC_DIR_PATH = process.env.DOC_DIR_PATH;
 var fileManager = require('./fileManager/index');
 fileManager.initRootPath( DOC_DIR_PATH );
 
-logger.debug('29');
+function getErrorWillSendClient( err ) {
+
+	err = _.pick( err, 'errorCode' );
+	if( _.isEmpty( err ) ) {
+		err = { errorCode: 'UNKNOWN_ERROR' };
+	}
+
+	return err;
+}
 
 /**
  * @api {post} /readDocList readDocList
@@ -109,7 +118,9 @@ router.post('/createDoc', (req, res, next) => {
 	fileManager.createFile( req.body.fileName, req.body.raw ).then( () => {
 		res.send({ errorCode: 'NO_ERROR' });
 	}).catch( ( err ) => {
-		res.send( err );
+
+		logger.error( err );
+		res.send( getErrorWillSendClient( err ) );
 	});
 });
 
@@ -136,7 +147,8 @@ router.post('/updateDoc', (req, res, next) => {
 	fileManager.updateFile( req.body.fileName, req.body.raw ).then( () => {
 		res.send({ errorCode: 'NO_ERROR' });
 	}).catch( ( err ) => {
-		res.send( err );
+		logger.error( err );
+		res.send( getErrorWillSendClient( err ) );
 	});
 });
 
