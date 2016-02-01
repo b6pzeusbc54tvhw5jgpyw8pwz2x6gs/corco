@@ -306,7 +306,7 @@ gulp.task('fetchPublicFromClient', () => {
 
 gulp.task('apidoc', () => {
 
-	const cmd = 'node_modules/apidoc/bin/apidoc -i src -o public/apidoc';
+	const cmd = 'node_modules/apidoc-support-socketio/bin/apidoc-support-socketio -i src -o public/apidoc';
 	console.log( cmd );
 	syncExec( cmd );
 

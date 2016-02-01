@@ -4,8 +4,14 @@
  * Module dependencies.
  */
 
-process.env.DEVELOPMENT = JSON.parse( process.env.DEVELOPMENT );
-process.env.PRODUCTION = JSON.parse( process.env.PRODUCTION );
+try {
+	process.env.DEVELOPMENT = JSON.parse( process.env.DEVELOPMENT );
+	process.env.PRODUCTION = JSON.parse( process.env.PRODUCTION );
+} catch( err ) {
+
+	process.env.DEVELOPMENT = true;
+	process.env.PRODUCTION = false;
+}
 
 if( process.env.DEVELOPMENT ) {
 	require("babel-register");

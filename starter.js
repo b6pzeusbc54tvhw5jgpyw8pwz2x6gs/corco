@@ -12,7 +12,7 @@ const processName = "parallels-comment";
 
 var pm2script = {
 	"name": processName,
-	"cwd": DEVELOPMENT ? path.join( __dirname,'src') : '',
+	"cwd": path.join( __dirname, DEVELOPMENT ? 'src' : 'build' ),
 	"args": ["--color"],
 	"script": path.join('bin','www'),
 
@@ -27,11 +27,10 @@ var pm2script = {
 	// Default environment variables that will be injected in any environment and at any start
 	"env": {
 		"PORT": 3015,
-		"DEVELOPMENT": true,
+		"DEVELOPMENT": false,
 		"PRODUCTION": false,
 
 		"DOC_DIR_PATH": path.join( CDN_HOME_DIR, "files" ),
-
 		"VIEWS_PATH": path.join( CDN_HOME_DIR, "views" ),
 		"PUBLIC_PATH": path.join( CDN_HOME_DIR, 'public' )
 	},

@@ -14,7 +14,9 @@
 		"no-undef": 2,
 		"no-shadow": [1, {"hoist": "functions", "allow": ["e"] }],
 		"no-use-before-define": [2, "nofunc"],
-		"no-unused-vars": [1, {"vars": "all", "args": "none"}]
+		"no-unused-vars": [1, {"vars": "all", "args": "none"}],
+		"no-dupe-keys": 2,
+		"no-redeclare": 2
     },
 	"env": {
 		"node": true

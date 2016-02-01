@@ -1,0 +1,67 @@
+
+<!doctype html>
+<html>
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+	<title>{{title}}</title>
+
+	<link rel="stylesheet" href="css/normalize.css">
+</head>
+
+<body>
+
+	<a href="#aaa">aaa</a>
+	<a href="#bbb">bbb</a>
+	<a href="#ccc">ccc</a>
+	<div id="remove">remove</div>
+
+	<form action="sub.html" method="get" target="sub">
+		<input type="submit" value="go iframe" />
+	</form>
+
+	<iframe id="sub" name="sub"></iframe>
+
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script>
+
+		function remove() {
+			//$('iframe').remove();
+			//$('iframe').attr("src", "" );
+			var frame = document.getElementById("sub");
+			//frameDoc = frame.contentWindow.document;
+			//frameDoc.close();
+			frameDoc = frame.contentDocument || frame.contentWindow.document;
+			frameDoc.documentElement.innerHTML = "";
+		}
+
+		console.log('hi');
+		$('#remove').on('click', function() {
+			remove();
+		});
+		var frame = window.frames["sub"];
+
+		var h = [];
+		$('iframe').on('load', function() {
+			//h.push( iframe.location.href );
+			console.log( 'hfffi' );
+			console.log( frame.window.location.href );
+			console.log( frame.window.history.length );
+		});
+		$('iframe').on('unload', function() {
+			//h.push( iframe.location.href );
+			console.log( 'unload' );
+		});
+
+// 솔루션
+//얼마나 forward 이동했는지 기록.
+//forward 이동한만큼 back( 이동한만큼 )
+//load 이벤트가 받으면 iframe 삭제
+
+	</script>
+</body>
+
+</html>
