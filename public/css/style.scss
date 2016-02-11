@@ -656,3 +656,15 @@ pre .hljs-chunk {
 pre .hljs-tex .hljs-formula {
   opacity: 0.5;
 }
+
+.DocListArea {
+  position:absolute;
+  float:right;
+  top:10px;
+  right:10px;
+  border : 1px solid #333;
+}
+
+.noneAnswerArea {
+  height:50px;
+}

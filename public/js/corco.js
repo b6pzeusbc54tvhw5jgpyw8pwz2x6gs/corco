@@ -118,6 +118,8 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 	$scope.editingFullRaw = '';
 	$scope.raw = '';
 	$scope.sectionList = [];
+	$scope.noneAnswerCheck = [];
+
 	$scope.editingRaw = '';
 	$scope.editingHtml = '';
 
@@ -126,6 +128,8 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 
 	$scope.editingDirection = false;
 	$scope.editingIdx = false;
+
+	var apiHost = 'http://utopos.me:3015';
 
 	$scope.cancelFullEdit = function() {
 		$scope.fullEditMode = '';
@@ -284,6 +288,7 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 
 		var save = function() {
 			console.log( leftText );
+			alert("THIS");
 			sectionList.push({ leftText: leftText, rightText: rightText });
 			leftText = '', rightText = '';
 			return;
@@ -375,6 +380,44 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 
 		}.bind(this));
 	};
+
+//utopos.me:3015/readDocList
+	$scope.getSaveDocList = function() {
+		var reqParams = { raw: this.raw };
+		$http.post(apiHost + '/readDocList').then( function( res ) {
+		//$http.post('/readDocList', reqParams ).then( function( res ) {
+			var showFileArea = angular.element( document.querySelector( '#DocListArea' ) );
+     		
+     		for(var i in res.data) {
+     			showFileArea.append('</br>'+res.data[i]);
+     		}
+
+		});
+	};
+
+	// /createDoc
+	$scope.createDoc = function() {
+		//var reqParams = { raw: this.raw };
+		$http.post(apiHost + '/createDoc').then( function( res ) {
+		//$http.post('/readDocList', reqParams ).then( function( res ) {
+
+		}.bind(this));
+	};
+
+	//single read
+	$scope.getSaveDoc = function() {
+		$http.post(apiHost + '/readDoc').then( function( res ) {
+		
+		});
+	};
+
+	$scope.updateDoc = function() {
+		$http.post(apiHost + '/updateDoc').then( function( res ) {
+		//$http.post('/readDocList', reqParams ).then( function( res ) {
+
+		}.bind(this));
+	};
+
 
 }]);
 

@@ -40,9 +40,13 @@
 
 				<div class="section leftSection" ng-click="edit($event,'left',$index)" ng-bind-html="section.leftHtml"></div>
 
-				<div class="section rightSection" ng-click="edit($event,'right',$index)" ng-bind-html="section.rightHtml"></div>
+				<div class="section rightSection" ng-click="edit($event,'right',$index)" ng-class="section.rightHtml.length < 1 ? 'noneAnswerArea':''" ng-bind-html="section.rightHtml"></div>
 			</li>
 		</ul>
+
+		<div id="DocListArea" class="DocListArea" data-ng-init="getSaveDocList();">
+			DocList :
+		</div>
 
 		<div class="editArea" ng-show="editMode">
 
@@ -78,6 +82,7 @@
 
 		<button ng-click="getCorco()">getTestFile()</button>
 		<button ng-click="editFullRaw()">edit</button>
+		<button ng-click="getFileList()">getFileList</button>
 	</div>
 
 </body>
