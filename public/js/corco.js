@@ -119,6 +119,7 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 	$scope.raw = '';
 	$scope.sectionList = [];
 	$scope.noneAnswerCheck = [];
+	$scope.docList = [];
 
 	$scope.editingRaw = '';
 	$scope.editingHtml = '';
@@ -288,7 +289,6 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 
 		var save = function() {
 			console.log( leftText );
-			alert("THIS");
 			sectionList.push({ leftText: leftText, rightText: rightText });
 			leftText = '', rightText = '';
 			return;
@@ -381,13 +381,20 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 		}.bind(this));
 	};
 
-//utopos.me:3015/readDocList
+	//show slide mneu
+	$scope.showFileList = function() {
+
+	}
+
 	$scope.getSaveDocList = function() {
 		var reqParams = { raw: this.raw };
 		$http.post(apiHost + '/readDocList').then( function( res ) {
 		//$http.post('/readDocList', reqParams ).then( function( res ) {
+
+			$scope.docList = res.data;
+
 			var showFileArea = angular.element( document.querySelector( '#DocListArea' ) );
-     		
+ 
      		for(var i in res.data) {
      			showFileArea.append('</br>'+res.data[i]);
      		}
@@ -395,12 +402,22 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 		});
 	};
 
-	// /createDoc
-	$scope.createDoc = function() {
-		//var reqParams = { raw: this.raw };
-		$http.post(apiHost + '/createDoc').then( function( res ) {
-		//$http.post('/readDocList', reqParams ).then( function( res ) {
+	$scope.inputFileName = function() {
+		var fileName = prompt('파일명을 입력해주세요.', "fileName");
 
+		if(fileName != null) {
+			$scope.createDoc( fileName );
+		}
+	}
+
+	// /createDoc
+	$scope.createDoc = function(name) {
+		var reqParams = { fileName : name,  raw : 'test' };
+		$http.post(apiHost + '/createDoc', reqParams ).then( function( res ) {
+			if(res.status == 200)
+				alert('파일 생성 완료');
+			else
+				alert('파일 생성 실패');
 		}.bind(this));
 	};
 

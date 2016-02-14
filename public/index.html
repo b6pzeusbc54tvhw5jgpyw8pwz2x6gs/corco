@@ -9,6 +9,8 @@
 
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/snap.css">
+	<link rel="stylesheet" href="css/menu_css.css">
 
 	<!-- <script src="https://code.angularjs.org/1.4.8/angular-mocks.js"></script> -->
 
@@ -22,12 +24,35 @@
 	<script type="text/javascript" src="bower_components/ng-focus-on/ng-focus-on.min.js"></script>
 	<script type="text/javascript" src="bower_components/underscore/underscore-min.js"></script>
 	<script type="text/javascript" src="js/corco.js"></script>
+	
 </head>
 
 <body>
 
-
-	<div ng-controller="CorcoController">
+	<div class="snap-drawers">
+        <div class="snap-drawer snap-drawer-right">
+            <div>
+                <h3>Snap.js</h3>
+                <h4>Demos</h4>
+                <ul>
+                  	<li><a href="default.html">Default</a></li>
+                    <li><a href="noDrag.html">No Drag</a></li>
+					<li><a href="dragElement.html">Drag Element</a></li>
+                    <li><a href="rightDisabled.html">Right Disabled</a></li>
+                    <li><a href="hyperextend.html">Hyperextension Disabled</a></li>
+                    <li><a href="skinnyThreshold.html">Skinny Threshold</a></li>
+                    <li><a href="toggles.html">Toggles</a></li>
+                    <li><a href="classNames.html">Class Names</a></li>
+                    <li><a href="expand.html">Expanding</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                    <li><a href="ratchet/template.html">Ratchet</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+		
+	<div id="content" class="snap-content" ng-controller="CorcoController">
+		<div style="margin-top:55px;"></div>
 		<h2>parallels comment project</h2>
 		<div>코드나 질문답변 형식의 문서에서 좌/우 에 들어갈 콘텐츠를 분리하여 보여주는 것이 주 목적</div>
 		<div>모바일보다는 데스크탑모니터 큰 화면에서 봐주시면됩니다.</div>
@@ -48,10 +73,19 @@
 			DocList :
 		</div>
 
+		<div id="toolbar">
+			<div style="float:right;margin-right:10px;">
+				<button ng-click="inputFileName();">new</button>	
+				<button>save</button>
+				<a href="#" id="open-right">fileList</a>			
+			</div>
+		</div>
+		<div ng-if="docList.length > 1" class="btnCreateFile">
+			<button ng-click="inputFileName();">create File</button>
+		</div>
+
 		<div class="editArea" ng-show="editMode">
-
 			<!--textarea class="asRaw" ng-trim="false" ng-model="editingRaw" ng-change="changeEditingRaw()" focus-on="editArea"></textarea>-->
-
 			<div class="asRaw" ng-trim="false" ng-model="editingRaw" ui-ace="{
 				onLoad: aceLoaded,
 				onChange: changeEditingRaw,
@@ -87,3 +121,11 @@
 
 </body>
 </html>
+
+<script type="text/javascript" src="js/snap.js"></script>
+<script type="text/javascript" src="js/snap_menu.js"></script>
+<script>
+	var snapper = new Snap({
+  		element: document.getElementById('content')
+	});
+</script>

@@ -660,11 +660,21 @@ pre .hljs-tex .hljs-formula {
 .DocListArea {
   position:absolute;
   float:right;
-  top:10px;
+  top:48px;
   right:10px;
   border : 1px solid #333;
 }
 
 .noneAnswerArea {
   height:50px;
+}
+
+.btnCreateFile {
+  position:absolute;
+  top:50%;
+  left:50%;
+  width: 100px;
+  height: 100px;
+  margin-top: -50px;
+  margin-left: -50px;
 }
