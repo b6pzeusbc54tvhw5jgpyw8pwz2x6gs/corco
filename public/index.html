@@ -9,6 +9,8 @@
 
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/snap.css">
+	<link rel="stylesheet" href="css/menu_css.css">
 
 	<!-- <script src="https://code.angularjs.org/1.4.8/angular-mocks.js"></script> -->
 
@@ -22,12 +24,26 @@
 	<script type="text/javascript" src="bower_components/ng-focus-on/ng-focus-on.min.js"></script>
 	<script type="text/javascript" src="bower_components/underscore/underscore-min.js"></script>
 	<script type="text/javascript" src="js/corco.js"></script>
+	
 </head>
 
 <body>
 
-
-	<div ng-controller="CorcoController">
+	<div class="snap-drawers" ng-controller="CorcoController">
+        <div class="snap-drawer snap-drawer-left">
+            <div>
+                <h3>Corco FileList</h3>
+                <ul ng-repeat="row in docList">
+                	<li><a ng-click="readDoc(row);">{{row}}</a></li>
+                  	
+                </ul>
+            </div>
+        </div>
+    </div>
+		
+	
+	<div id="content" class="snap-content" ng-controller="CorcoController">
+		<div style="margin-top:55px;"></div>
 		<h2>parallels comment project</h2>
 		<div>코드나 질문답변 형식의 문서에서 좌/우 에 들어갈 콘텐츠를 분리하여 보여주는 것이 주 목적</div>
 		<div>모바일보다는 데스크탑모니터 큰 화면에서 봐주시면됩니다.</div>
@@ -44,14 +60,23 @@
 			</li>
 		</ul>
 
-		<div id="DocListArea" class="DocListArea" data-ng-init="getSaveDocList();">
+		<!-- <div id="DocListArea" class="DocListArea" data-ng-init="getSaveDocList();">
 			DocList :
+		 </div>-->
+
+		<div id="toolbar">
+			<div style="float:right;margin-right:10px;">
+				<button ng-click="inputFileName();">new</button>	
+				<button>save</button>
+				<button id="open-right">fileList</button>			
+			</div>
+		</div>
+		<div ng-if="docList.length > 1" class="btnCreateFile">
+			<button ng-click="inputFileName();">create File</button>
 		</div>
 
 		<div class="editArea" ng-show="editMode">
-
 			<!--textarea class="asRaw" ng-trim="false" ng-model="editingRaw" ng-change="changeEditingRaw()" focus-on="editArea"></textarea>-->
-
 			<div class="asRaw" ng-trim="false" ng-model="editingRaw" ui-ace="{
 				onLoad: aceLoaded,
 				onChange: changeEditingRaw,
@@ -87,3 +112,11 @@
 
 </body>
 </html>
+
+<script type="text/javascript" src="js/snap.js"></script>
+<script type="text/javascript" src="js/snap_menu.js"></script>
+<script>
+	var snapper = new Snap({
+  		element: document.getElementById('content')
+	});
+</script>
