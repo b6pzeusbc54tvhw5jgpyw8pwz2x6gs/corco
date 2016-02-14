@@ -29,28 +29,19 @@
 
 <body>
 
-	<div class="snap-drawers">
-        <div class="snap-drawer snap-drawer-right">
+	<div class="snap-drawers" ng-controller="CorcoController">
+        <div class="snap-drawer snap-drawer-left">
             <div>
-                <h3>Snap.js</h3>
-                <h4>Demos</h4>
-                <ul>
-                  	<li><a href="default.html">Default</a></li>
-                    <li><a href="noDrag.html">No Drag</a></li>
-					<li><a href="dragElement.html">Drag Element</a></li>
-                    <li><a href="rightDisabled.html">Right Disabled</a></li>
-                    <li><a href="hyperextend.html">Hyperextension Disabled</a></li>
-                    <li><a href="skinnyThreshold.html">Skinny Threshold</a></li>
-                    <li><a href="toggles.html">Toggles</a></li>
-                    <li><a href="classNames.html">Class Names</a></li>
-                    <li><a href="expand.html">Expanding</a></li>
-                    <li><a href="settings.html">Settings</a></li>
-                    <li><a href="ratchet/template.html">Ratchet</a></li>
+                <h3>Corco FileList</h3>
+                <ul ng-repeat="row in docList">
+                	<li><a ng-click="readDoc(row);">{{row}}</a></li>
+                  	
                 </ul>
             </div>
         </div>
     </div>
 		
+	
 	<div id="content" class="snap-content" ng-controller="CorcoController">
 		<div style="margin-top:55px;"></div>
 		<h2>parallels comment project</h2>
@@ -69,15 +60,15 @@
 			</li>
 		</ul>
 
-		<div id="DocListArea" class="DocListArea" data-ng-init="getSaveDocList();">
+		<!-- <div id="DocListArea" class="DocListArea" data-ng-init="getSaveDocList();">
 			DocList :
-		</div>
+		 </div>-->
 
 		<div id="toolbar">
 			<div style="float:right;margin-right:10px;">
 				<button ng-click="inputFileName();">new</button>	
 				<button>save</button>
-				<a href="#" id="open-right">fileList</a>			
+				<button id="open-right">fileList</button>			
 			</div>
 		</div>
 		<div ng-if="docList.length > 1" class="btnCreateFile">

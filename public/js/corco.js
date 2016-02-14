@@ -132,6 +132,10 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 
 	var apiHost = 'http://utopos.me:3015';
 
+	$http.post(apiHost + '/readDocList').then( function( res ) {
+		$scope.docList = res.data;
+	});
+
 	$scope.cancelFullEdit = function() {
 		$scope.fullEditMode = '';
 		$scope.fullEditMode = false;
@@ -422,9 +426,10 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 	};
 
 	//single read
-	$scope.getSaveDoc = function() {
-		$http.post(apiHost + '/readDoc').then( function( res ) {
-		
+	$scope.readDoc = function(name) {
+		var reqParams = {fileName : name};
+		$http.post(apiHost + '/readDoc', reqParams).then( function( res ) {
+			console.log(res);
 		});
 	};
 
