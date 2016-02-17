@@ -433,8 +433,16 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 		var reqParams = {fileName : name};
 		$http.post(apiHost + '/readDoc', reqParams).then( function( res ) {
 			var raw = res.data.raw;
-
 			$scope.editingFullRaw = raw;
+
+			//file empty check
+			if(raw.length < 1)
+				$scope.fileEmpty = true;
+			else
+				$scope.fileEmpty = false;
+
+			//filename save
+			$scope.selectFileName = name;
 
 			var sectionList = $scope.parseToSectionList( raw );
 			$scope.makeHtmlByMarkdown( sectionList );

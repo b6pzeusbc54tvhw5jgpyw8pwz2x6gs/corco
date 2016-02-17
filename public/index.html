@@ -71,14 +71,18 @@
 		 </div>-->
 
 		<div id="toolbar">
+			<label class="fileName">{{selectFileName}}</label>
 			<div style="float:right;margin-right:10px;">
 				<button ng-click="inputFileName();">new</button>	
 				<button>save</button>
 				<button id="open-right">fileList</button>			
 			</div>
 		</div>
-		<div ng-if="docList.length > 1" class="btnCreateFile">
-			<button ng-click="inputFileName();">create File</button>
+		<div ng-if="docList.length < 1" class="btnCreateFile">
+			<button ng-click="inputFileName();">Create File</button>
+		</div>
+		<div ng-if="fileEmpty" class="btnCreateFile">
+			<button ng-click="inputFileName();">Input Content</button>
 		</div>
 
 		<div class="editArea" ng-show="editMode">
@@ -113,7 +117,6 @@
 
 		<button ng-click="getCorco()">getTestFile()</button>
 		<button ng-click="editFullRaw()">edit</button>
-		<button ng-click="getFileList()">getFileList</button>
 	</div>
 </div>
 </body>
