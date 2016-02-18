@@ -164,7 +164,8 @@ const fileManager = {
 		return nodefn.call( fs.readdir, rootPath ).then( ( fileList ) => {
 
 			return _.filter( fileList, ( fileName ) => {
-				if( /\.corco$/.test( fileName )) return true;
+				if( /^\./.test( fileName )) return false;
+				return true;
 			});
 		});
 	},
