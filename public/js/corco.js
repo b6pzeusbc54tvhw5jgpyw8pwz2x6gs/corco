@@ -142,9 +142,13 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 	};
 	$scope.saveFullEdit = function() {
 		var raw = $scope.editingFullRaw;
+
 		var sectionList = $scope.parseToSectionList( raw );
+		
 		$scope.makeHtmlByMarkdown( sectionList );
+
 		$scope.sectionList = sectionList;
+
 		$scope.fullEditMode = false;
 		$scope.raw = raw;
 
@@ -365,7 +369,6 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 		console.log('click getCorco');
 		$http.get('doc/test.corco').then( function( res ) {
 
-			console.log( res.data );
 			this.raw = res.data.raw;
 
 			var sectionList = this.parseToSectionList( res.data.raw );
@@ -429,8 +432,26 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 	$scope.readDoc = function(name) {
 		var reqParams = {fileName : name};
 		$http.post(apiHost + '/readDoc', reqParams).then( function( res ) {
-			console.log(res);
-		});
+			var raw = res.data.raw;
+			$scope.editingFullRaw = raw;
+
+			//file empty check
+			if(raw.length < 1)
+				$scope.fileEmpty = true;
+			else
+				$scope.fileEmpty = false;
+
+			//filename save
+			$scope.selectFileName = name;
+
+			var sectionList = $scope.parseToSectionList( raw );
+			$scope.makeHtmlByMarkdown( sectionList );
+			$scope.sectionList = sectionList;
+			$scope.raw = raw;
+
+			menuClose();
+
+		}.bind(this));
 	};
 
 	$scope.updateDoc = function() {

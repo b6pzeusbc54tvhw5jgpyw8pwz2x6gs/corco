@@ -29,10 +29,16 @@
 
 <body>
 
-	<div class="snap-drawers" ng-controller="CorcoController">
+<div ng-controller="CorcoController">
+	<div class="snap-drawers">
         <div class="snap-drawer snap-drawer-left">
             <div>
                 <h3>Corco FileList</h3>
+                <div class="asRaw" ng-model="editingFullRaw" ui-ace="{
+				mode: 'markdown',
+				onLoad: aceLoaded,
+				useWrapMode: true
+			}"></div>
                 <ul ng-repeat="row in docList">
                 	<li><a ng-click="readDoc(row);">{{row}}</a></li>
                   	
@@ -42,7 +48,7 @@
     </div>
 		
 	
-	<div id="content" class="snap-content" ng-controller="CorcoController">
+	<div id="content" class="snap-content">
 		<div style="margin-top:55px;"></div>
 		<h2>parallels comment project</h2>
 		<div>코드나 질문답변 형식의 문서에서 좌/우 에 들어갈 콘텐츠를 분리하여 보여주는 것이 주 목적</div>
@@ -65,14 +71,18 @@
 		 </div>-->
 
 		<div id="toolbar">
+			<label class="fileName">{{selectFileName}}</label>
 			<div style="float:right;margin-right:10px;">
 				<button ng-click="inputFileName();">new</button>	
 				<button>save</button>
 				<button id="open-right">fileList</button>			
 			</div>
 		</div>
-		<div ng-if="docList.length > 1" class="btnCreateFile">
-			<button ng-click="inputFileName();">create File</button>
+		<div ng-if="docList.length < 1" class="btnCreateFile">
+			<button ng-click="inputFileName();">Create File</button>
+		</div>
+		<div ng-if="fileEmpty" class="btnCreateFile">
+			<button ng-click="inputFileName();">Input Content</button>
 		</div>
 
 		<div class="editArea" ng-show="editMode">
@@ -107,9 +117,8 @@
 
 		<button ng-click="getCorco()">getTestFile()</button>
 		<button ng-click="editFullRaw()">edit</button>
-		<button ng-click="getFileList()">getFileList</button>
 	</div>
-
+</div>
 </body>
 </html>
 
@@ -119,4 +128,8 @@
 	var snapper = new Snap({
   		element: document.getElementById('content')
 	});
+
+	function menuClose() {
+		snapper.close();
+	}
 </script>
