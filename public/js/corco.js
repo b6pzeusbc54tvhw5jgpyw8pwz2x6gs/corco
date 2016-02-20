@@ -144,13 +144,17 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 		var raw = $scope.editingFullRaw;
 
 		var sectionList = $scope.parseToSectionList( raw );
-		
+
 		$scope.makeHtmlByMarkdown( sectionList );
 
 		$scope.sectionList = sectionList;
 
 		$scope.fullEditMode = false;
 		$scope.raw = raw;
+
+		var reqParams = {fileName : $scope.selectFileName, raw : $scope.editingFullRaw};
+			$http.post(apiHost + '/updateDoc', reqParams).then( function( res ) {
+		});
 
 		var reqParams = { raw: raw };
 		$http.post('doc/test.corco', reqParams ).then( function( res ) {
@@ -454,11 +458,14 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 		}.bind(this));
 	};
 
-	$scope.updateDoc = function() {
-		$http.post(apiHost + '/updateDoc').then( function( res ) {
-		//$http.post('/readDocList', reqParams ).then( function( res ) {
+	$scope.updateDoc = function(name) {
+		var reqParams = {fileName : name, raw : $scope.editingFullRaw};
+		console.log($scope.editingFullRaw);
+		// console.log($scope.)
 
-		}.bind(this));
+		// $http.post(apiHost + '/updateDoc', reqParams).then( function( res ) {
+
+		// }.bind(this));
 	};
 
 

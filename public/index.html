@@ -23,6 +23,7 @@
 	<script type="text/javascript" src="bower_components/angular-ui-ace/ui-ace.js"></script>
 	<script type="text/javascript" src="bower_components/ng-focus-on/ng-focus-on.min.js"></script>
 	<script type="text/javascript" src="bower_components/underscore/underscore-min.js"></script>
+	<script type="text/javascript" src="bower_components/Snap.js/snap.js"></script>
 	<script type="text/javascript" src="js/corco.js"></script>
 	
 </head>
@@ -73,9 +74,9 @@
 		<div id="toolbar">
 			<label class="fileName">{{selectFileName}}</label>
 			<div style="float:right;margin-right:10px;">
-				<button ng-click="inputFileName();">new</button>	
-				<button>save</button>
-				<button id="open-right">fileList</button>			
+				<button class="menu-button" ng-click="inputFileName();">new</button>	
+				<button class="menu-button">save</button>
+				<button class="menu-button" id="open-right">fileList</button>			
 			</div>
 		</div>
 		<div ng-if="docList.length < 1" class="btnCreateFile">
@@ -122,7 +123,6 @@
 </body>
 </html>
 
-<script type="text/javascript" src="js/snap.js"></script>
 <script type="text/javascript" src="js/snap_menu.js"></script>
 <script>
 	var snapper = new Snap({
