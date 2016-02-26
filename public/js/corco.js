@@ -154,6 +154,7 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 
 		var reqParams = {fileName : $scope.selectFileName, raw : $scope.editingFullRaw};
 			$http.post(apiHost + '/updateDoc', reqParams).then( function( res ) {
+				this.readDoc($scope.selectFileName);
 		});
 
 		var reqParams = { raw: raw };
@@ -425,8 +426,10 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 	$scope.createDoc = function(name) {
 		var reqParams = { fileName : name,  raw : 'test' };
 		$http.post(apiHost + '/createDoc', reqParams ).then( function( res ) {
-			if(res.status == 200)
+			if(res.status == 200) {
 				alert('파일 생성 완료');
+				this.readDoc(name);
+			}
 			else
 				alert('파일 생성 실패');
 		}.bind(this));
