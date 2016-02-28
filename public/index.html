@@ -59,11 +59,20 @@
 		<div>2. 편집 기능</div>
 		<div>3. 서버 디렉토리 하나의 파일을 모두 보여주는 file browser</div>
 		<ul class="sections">
-			<li ng-repeat="section in sectionList">
-
+			<li class="sectionArea" ng-repeat="section in sectionList">
 				<div class="section leftSection" ng-click="edit($event,'left',$index)" ng-bind-html="section.leftHtml"></div>
 
 				<div class="section rightSection" ng-click="edit($event,'right',$index)" ng-class="section.rightHtml.length < 1 ? 'noneAnswerArea':''" ng-bind-html="section.rightHtml"></div>
+
+				<script>
+				function test() {
+					var tt = {{sectionCount}};
+					alert(tt);
+				}
+					var text = document.querySelector('.rightSection').textContent;
+					alert(text);
+					//var fun = new Toy('robot', 40);
+				</script>
 			</li>
 		</ul>
 
@@ -75,7 +84,7 @@
 			<label class="fileName">{{selectFileName}}</label>
 			<div style="float:right;margin-right:10px;">
 				<button class="menu-button" ng-click="inputFileName();">new</button>	
-				<button class="menu-button">save</button>
+				<button class="menu-button" ng-click="saveFullEdit();">save</button>
 				<button class="menu-button" id="open-right">fileList</button>			
 			</div>
 		</div>
@@ -116,9 +125,12 @@
 			</div>
 		</div>
 
-		<button ng-click="getCorco()">getTestFile()</button>
-		<button ng-click="editFullRaw()">edit</button>
+		<button onclick="test();">test</button>
+		<!-- button ng-click="getCorco()">getTestFile()</button>
+		<button ng-click="editFullRaw()">edit</button>-->
 	</div>
+	<!--overlay관련 임시처리-->
+	<div id="overlay-area" class="overlay" onclick="menuClose();"></div>
 </div>
 </body>
 </html>
@@ -126,18 +138,20 @@
 <script type="text/javascript" src="js/snap_menu.js"></script>
 <script>
 	var snapper = new Snap({
-  		element: document.getElementById('content')
+  		element: document.getElementById('content'),
 	});
 
 	snapper.on('open', function(){
-		document.getElementById("content").className = "snap-content overlay";
-
+		// document.getElementById("content").className = "snap-content overlay";
+		document.querySelector("#overlay-area").style.display = "block";
   	});
 
 	snapper.on('close', function(){
-		document.getElementById("content").className = "snap-content";
-  	});
+		// document.getElementById("content").className = "snap-content";
+		document.querySelector("#overlay-area").style.display = "none";
+	});
 
+	var fnction
 
 	function menuClose() {
 		snapper.close();
