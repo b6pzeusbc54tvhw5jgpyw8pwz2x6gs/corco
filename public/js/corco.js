@@ -154,6 +154,8 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 
 		var reqParams = {fileName : $scope.selectFileName, raw : $scope.editingFullRaw};
 			$http.post(apiHost + '/updateDoc', reqParams).then( function( res ) {
+				alert("저장되었습니다.");
+
 				this.readDoc($scope.selectFileName);
 		});
 
@@ -429,6 +431,11 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 			if(res.status == 200) {
 				alert('파일 생성 완료');
 				this.readDoc(name);
+
+				//docList 갱신
+				$http.post(apiHost + '/readDocList').then( function( res ) {
+					$scope.docList = res.data;
+				});
 			}
 			else
 				alert('파일 생성 실패');
@@ -454,6 +461,7 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 			var sectionList = $scope.parseToSectionList( raw );
 			$scope.makeHtmlByMarkdown( sectionList );
 			$scope.sectionList = sectionList;
+			$scope.sectionCount = raw.length;
 			$scope.raw = raw;
 
 			menuClose();
