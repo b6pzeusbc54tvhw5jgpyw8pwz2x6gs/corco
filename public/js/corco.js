@@ -1,6 +1,7 @@
 /* global angular,_,marked,hljs,ace */
 var corco = angular.module('corco', ['focusOn','ui.ace'] );
 
+
 ace.define("MyHighlightRules", [], function(require, exports, module) {
 
 	"use strict";
@@ -53,6 +54,54 @@ marked.setOptions({
 		hljs.highlightAuto(code).value;
 	}
 });
+
+var leftOffsetArray = new Array();
+var leftElementArray = new Array();
+
+corco.directive('bindHtmlUnsafe', function( $compile ) {
+    return function( $scope, $element, $attrs ) {
+        var compile = function( newHTML ) {
+        	$element.html(newHTML);
+
+            newHTML = $compile(newHTML)($scope);
+        };
+
+        var htmlName = $attrs.bindHtmlUnsafe;
+
+        $scope.$watch(htmlName, function( newHTML ) {
+            if(!newHTML) return;
+            compile(newHTML);
+
+			if($element[0].className != 'section leftSection') {
+				if(leftOffsetArray[$scope.$index] > $element[0].offsetHeight)
+					$element.attr( 'style', 'height: ' + leftOffsetArray[$scope.$index] + 'px' );
+				else
+					leftElementArray[$scope.$index].attr( 'style', 'height: ' + $element[0].offsetHeight + 'px' );
+			} else {
+				leftOffsetArray.push($element[0].offsetHeight);
+				leftElementArray.push($element);
+			}
+        });
+    };
+});
+
+// .directive('highlight', [
+//     function () {
+//         return {
+//             replace: false,
+//             scope: {
+//                 'ngModel': '='
+//             },
+//             link: function (scope, element) {
+//                 // element.html(scope.ngModel);
+//                 // var items = element[0].querySelectorAll('code,pre');
+//                 // angular.forEach(items, function (item) {
+//                 //     hljs.highlightBlock(item);
+
+//             }
+//         };
+//     }
+// ]);
 
 //corco.directive('startEdit', [function() {
 	//return {
@@ -478,7 +527,6 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 
 		// }.bind(this));
 	};
-
 
 }]);
 
