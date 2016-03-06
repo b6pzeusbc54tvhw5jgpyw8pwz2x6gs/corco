@@ -495,6 +495,10 @@ corco.controller('CorcoController', ['$scope','$http','$sce','focus', function( 
 	$scope.readDoc = function(name) {
 		var reqParams = {fileName : name};
 		$http.post(apiHost + '/readDoc', reqParams).then( function( res ) {
+
+			leftOffsetArray = new Array();
+			leftElementArray = new Array();
+
 			var raw = res.data.raw;
 			$scope.editingFullRaw = raw;
 
